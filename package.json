@@ -1,19 +1,28 @@
 {
   "name": "colorful-voice",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "colorful console for node.",
+  "keywords": [
+    "node",
+    "console"
+  ],
+  "homepage": "https://github.com/Nyamazing/colorful-voice",
+  "bugs": {
+    "url": "https://github.com/Nyamazing/colorful-voice/issues"
   },
+  "license": "MIT",
+  "author": "Nyamazing!",
+  "files": [
+    "README.md",
+    "LICENSE",
+    "index.js"
+  ],
+  "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Nyamazing/node-colorful-console.git"
+    "url": "https://github.com/Nyamazing/colorful-voice.git"
   },
-  "author": "nyamazing <shukujitsu@gmail.com> (https://github.com/Nyamazing)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Nyamazing/node-colorful-console/issues"
-  },
-  "homepage": "https://github.com/Nyamazing/node-colorful-console"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
