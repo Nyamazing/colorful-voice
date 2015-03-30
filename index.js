@@ -11,7 +11,7 @@ var colors = [
 ];
 
 module.exports = cv = function(obj){
-  if (obj instanceof cv) return cv;
+  if (obj instanceof cv) return obj;
   if (!(this instanceof cv)) return new cv(obj);
 
   if (obj == undefined ){
