@@ -22,8 +22,11 @@ module.exports = cv = function(obj){
 };
 
 cv.prototype.add = function(obj){
+  
   if( obj == undefined){
     return cv(this._wrapped);
+  } else if( obj instanceof cv ){
+    return cv(this._wrapped.concat(obj._wrapped));
   } else {
     return cv(this._wrapped.concat(obj));
   }
