@@ -51,7 +51,7 @@ colors.forEach(function(arr){
     return this._addColor(str, obj);
   };
   cv[color] = function(obj){
-    return (new cv())[color](obj);
+    return cv()[color](obj);
   };
 });
 
