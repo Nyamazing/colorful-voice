@@ -44,17 +44,17 @@ module.exports = cv = function(obj){
 };
 
 cv.prototype.add = function(obj){
-  var _inners = innersCopy(this._wrapped);
+  var _inners = this.values()//innersCopy(this._wrapped);
   if( obj == undefined){
     console.log('add as undefined');
     return cv(_inners);
   } else if( obj instanceof cv ){
     console.log('add as cv');
-    var _objInners = innersCopy(obj._wrapped);
+    var _objInners = obj.values()//innersCopy(obj._wrapped);
     return cv(_inners.concat(_objInners));
   } else if ( obj instanceof inner){
     console.log('add as inner');
-    var _inner = innerCopy(obj);
+    var _inner = obj.copy();
     return cv(_inners.concat(_inner));
   } else if ( obj.length != undefined && obj[0] instanceof inner){
     console.log('add as inners');
@@ -71,28 +71,33 @@ cv.add = function(obj){
   return new cv(obj);
 }
 
-var innerCopy = function(_inner){
-  var color = _inner.color;
-  var values = [].concat(_inner.values);
+inner.prototype.copy = function(){
+  console.log('inner copy');
+  var color = this.color;
+  var values = [].concat(this.values); // not deep
   var i = new inner(values);
   i.color = color;
   return i;
 }
 
 var innersCopy = function(wrapped){
-  return wrapped.map(function(inner){
-    return innerCopy(inner);
+  return wrapped.map(function(i){
+    return i.copy();
   });
+}
+
+cv.prototype.values = function(){
+  return innersCopy(this._wrapped);
 }
 
 cv.prototype._addColor = function(key,obj){
   var _color = colors[key];
   if( this._wrapped[this._wrapped.length -1].values.length === 0 ){
-    var n = innersCopy(this._wrapped);
+    var n = this.values();
     n[n.length -1].color = _color;
     return cv( n );
   } else {
-    var n = innersCopy(this._wrapped);
+    var n = this.values();
     var _inner = new inner();
     _inner.color = _color;
     return cv( n.concat(_inner) );
@@ -108,9 +113,14 @@ cv.prototype._addColor = function(key,obj){
 var keys = Object.keys(colors);
 
 keys.forEach(function(key){
-  cv.prototype[key] = function(obj){
-    return this._addColor(key, obj);
-  };
+  Object.defineProperty(cv.prototype,key,{
+    get: function(){
+      return this._addColor(key);
+    }
+  });
+  //cv.prototype[key] = function(obj){
+  //  return this._addColor(key, obj);
+  //};
   cv[key] = function(obj){
     return cv()[key](obj);
   };
