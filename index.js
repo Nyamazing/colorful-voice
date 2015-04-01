@@ -17,9 +17,9 @@ var inner = function(obj){
   if (!(this instanceof inner)) return new inner(obj);
 
   this.color = defaultColor;
-  this.value = [];
+  this.values = [];
   if (obj != undefined) {
-    this.value = this.value.concat(obj);
+    this.values = this.values.concat(obj);
   }
 }
 
@@ -59,7 +59,7 @@ cv.prototype.add = function(obj){
     return cv(this._wrapped.concat(obj));
   } else {
     console.log('add as other');
-    return cv(this._wrapped[this._wrapped.length -1].value.concat(obj) );
+    return cv(this._wrapped[this._wrapped.length -1].values.concat(obj) );
   }
 };
 
@@ -67,7 +67,28 @@ cv.add = function(obj){
   return new cv(obj);
 }
 
-cv.prototype._addColor = function(_color,obj){
+var innerCopy = function(_inner){
+  var color = _inner.color;
+  var values = [].concat(_inner.values);
+  var i = new inner(values);
+  i.color = color;
+  return i;
+}
+
+var wrappedCopy = function(wrapped){
+  return wrapped.map(function(inner){
+    return innerCopy(inner);
+  });
+}
+
+cv.prototype._addColor = function(key,obj){
+  var _color = colors[key];
+  if( this._wrapped[this._wrapped.length -1].values.length === 0 ){
+    var n = wrappedCopy(this._wrapped);
+    n[n.length -1].color = _color;
+    return cv( n );
+  }
+  // kokomade
   if( obj == undefined){
     return this.add(_color);
   } else {
@@ -78,9 +99,8 @@ cv.prototype._addColor = function(_color,obj){
 var keys = Object.keys(colors);
 
 keys.forEach(function(key){
-  var str   = colors[key];
   cv.prototype[key] = function(obj){
-    return this._addColor(str, obj);
+    return this._addColor(key, obj);
   };
   cv[key] = function(obj){
     return cv()[key](obj);
