@@ -89,7 +89,21 @@ var innersCopy = function(wrapped){
 cv.prototype.values = function(){
   return innersCopy(this._wrapped);
 }
-
+// fork
+cv.prototype._addColor = function(key){
+  var _color = colors[key];
+  if( this._wrapped[this._wrapped.length -1].values.length === 0 ){
+    var n = this.values();
+    n[n.length -1].color = _color;
+    return cv( n );
+  } else {
+    var n = this.values();
+    var _inner = new inner();
+    _inner.color = _color;
+    return cv( n.concat(_inner) );
+  }
+};
+/*
 cv.prototype._addColor = function(key,obj){
   var _color = colors[key];
   if( this._wrapped[this._wrapped.length -1].values.length === 0 ){
@@ -109,7 +123,7 @@ cv.prototype._addColor = function(key,obj){
     return this.add([_color, obj]).reset();
   }
 };
-
+*/
 var keys = Object.keys(colors);
 
 keys.forEach(function(key){
