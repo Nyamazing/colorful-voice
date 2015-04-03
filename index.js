@@ -12,6 +12,10 @@ var colors = {
 
 var defaultColor = colors.white;
 
+
+
+
+
 var inner = function(obj){
   if (obj instanceof inner) return obj;
   if (!(this instanceof inner)) return new inner(obj);
@@ -23,7 +27,8 @@ var inner = function(obj){
   }
 }
 
-module.exports = cv = function(obj){
+
+/*module.exports =*/ cv = function(obj){
   console.log('new',obj);
   if (obj instanceof cv) return obj;
   if (!(this instanceof cv)) return new cv(obj);
@@ -81,6 +86,7 @@ inner.prototype.copy = function(){
 }
 
 var innersCopy = function(wrapped){
+  console.log(wrapped);
   return wrapped.map(function(i){
     return i.copy();
   });
@@ -152,3 +158,59 @@ cv.prototype.toConsole = function(){
   console.log( this.toString() );
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = a = (function colorfulVoice(_c, _vs, _v){
+  console.log(_c);
+  if( _vs == undefined ){
+    var values = [new inner()];
+  } else {
+    var values = innersCopy(_vs);
+  }
+  if ( _v == undefined ){
+  } else if ( typeof _v === 'function' && _v.name === 'colorfulVoice'){
+
+  } else if ( _v.length != undefined && _v[0] instanceof inner ){
+    var values = values.concat( innersCopy(_v) );
+  } else if ( _v instanceof inner ) {
+    var values = values.concat( _v.copy() );
+  } else {
+    var _q = innersCopy(_vs);
+    _q[_q.length-1].values = _q[_q.length-1].values.concat(_v);
+  }
+  //var value =  _v == undefined ? []
+  //                             : [].concat(_v);
+  var color = _c||'white';
+  var x = function(v){
+    return colorfulVoice(color, values, v);
+  };
+  x.values = function(){
+    console.log(values);
+    // console.log(color);
+  };
+  Object.defineProperties(x, {
+    'red': {
+      get: function(){
+        return colorfulVoice('red', values);
+      },
+    },
+    'blue': {
+      get: function(){
+        return colorfulVoice('blue', values);
+      },
+    },
+  });
+  return x;
+})();
