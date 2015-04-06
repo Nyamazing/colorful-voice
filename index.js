@@ -1,13 +1,32 @@
 var colors = {
-  black:   '\u001b[30m',
-  red:     '\u001b[31m',
-  green:   '\u001b[32m',
-  yellow:  '\u001b[33m',
-  blue:    '\u001b[34m',
-  magenta: '\u001b[35m',
-  cyan:    '\u001b[36m',
-  white:   '\u001b[37m',
+  black:   '\u001b[0;30m',
+  red:     '\u001b[0;31m',
+  green:   '\u001b[0;32m',
+  brown:   '\u001b[0;33m',
+  blue:    '\u001b[0;34m',
+  purple:  '\u001b[0;35m',
+  cyan:    '\u001b[0;36m',
+  lgray:   '\u001b[0;37m',
+  dgray:   '\u001b[1;30m',
+  lred:    '\u001b[1;31m',
+  lgreen:  '\u001b[1;32m',
+  yellow:  '\u001b[1;33m',
+  lblue:   '\u001b[1;34m',
+  lpurple: '\u001b[1;35m',
+  lcyan:   '\u001b[1;36m',
+  white:   '\u001b[1;37m',
   reset:   '\u001b[0m' ,
+};
+
+var backgrounds = {
+  black:  '\u001b[40m',
+  red:    '\u001b[41m',
+  green:  '\u001b[42m',
+  brown:  '\u001b[43m',
+  blue:   '\u001b[44m',
+  purple: '\u001b[45m',
+  cyan:   '\u001b[46m',
+  lgray:  '\u001b[47m',
 };
 
 var defaultColor = colors.white;
