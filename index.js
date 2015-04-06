@@ -170,31 +170,52 @@ cv.prototype.toConsole = function(){
 
 
 
-
+/*
+  * _c
+  * _vs values
+  * _v
+*/
 
 module.exports = a = (function colorfulVoice(_c, _vs, _v){
   console.log(_c);
+  var values;
+  var _values;
   if( _vs == undefined ){
-    var values = [new inner()];
+    _values = [new inner()];
   } else {
-    var values = innersCopy(_vs);
+    _values = innersCopy(_vs);
   }
-  if ( _v == undefined ){
+  if ( _c != undefined &&
+       _values[_values.length-1].values.length === 0 ){
+    console.log('color set at current inner');
+    var _q = innersCopy(_values);
+    _q[_q.length-1].color = _c;
+    values = _q;
+  } else if ( _c != undefined ) {
+    console.log('color set at new inner');
+    var i = new inner();
+    i.color = _c;
+    values = _values.concat(i);
+  } else if ( _v == undefined ){
+    console.log('no params');
+    values = _values;
   } else if ( typeof _v === 'function' && _v.name === 'colorfulVoice'){
-
+    console.log('set v is cv');
+    values = _values;
   } else if ( _v.length != undefined && _v[0] instanceof inner ){
-    var values = values.concat( innersCopy(_v) );
+    console.log('set v is inners');
+    values = _values.concat( innersCopy(_v) );
   } else if ( _v instanceof inner ) {
-    var values = values.concat( _v.copy() );
+    console.log('set v is inner');
+    values = _values.concat( _v.copy() );
   } else {
-    var _q = innersCopy(_vs);
+    console.log('set v is other params');
+    var _q = innersCopy(_values);
     _q[_q.length-1].values = _q[_q.length-1].values.concat(_v);
+    values = _q;
   }
-  //var value =  _v == undefined ? []
-  //                             : [].concat(_v);
-  var color = _c||'white';
   var x = function(v){
-    return colorfulVoice(color, values, v);
+    return colorfulVoice(null, values, v);
   };
   x.values = function(){
     console.log(values);
