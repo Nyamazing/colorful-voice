@@ -75,6 +75,8 @@ function colorfulVoiceMaker(_c, _vs, _v){
   x.values = function(){
     return values;
   };
+  x.toString = function(){
+  };
   x.add = function(s){
     return colorfulVoiceMaker(null, values, s);
   };
